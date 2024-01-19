@@ -75,7 +75,6 @@ class bitbybit {
                             break;
                         }
                         forget(bit1);
-
                         break;
                     }
                 }
