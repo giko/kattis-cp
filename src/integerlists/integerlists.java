@@ -7,23 +7,26 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 public class integerlists {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         FastIO io = new FastIO();
 
-        BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
-
-        int N = Integer.parseInt(r.readLine());
+        int N = io.nextInt();
         outter:
         for (int i = 0; i < N; ++i) {
+            if (i % 10 == 0) {
+                io.flush();
+            }
             Deque<Byte> numbers = new LinkedList<>();
             boolean reversed = false;
-            char[] commands = r.readLine().toCharArray();
-            r.readLine();
-            String ns = r.readLine();
-            ns = ns.substring(1, ns.length() - 1).trim();
-            if (!ns.isEmpty()) {
-                for (String is : ns.split(",")) {
-                    numbers.add(Byte.valueOf(is.trim()));
+            char[] commands = io.next().toCharArray();
+            int n = io.nextInt();
+
+            if (n == 0) {
+                io.next();
+            } else {
+                io.nextByte();
+                for (int j = 0; j < n; j++) {
+                    numbers.add((byte) io.nextInt());
                 }
             }
             for (char c : commands) {
@@ -41,7 +44,6 @@ public class integerlists {
                     }
                 }
             }
-
             if (numbers.isEmpty()) {
                 io.println("[]");
                 continue;
