@@ -15,14 +15,14 @@ class StockPrices {
             Order buyOrder = buy.peek();
             stockPrice = sellOrder.price;
             if (sellOrder.count == buyOrder.count) {
-                sell.remove(sellOrder);
-                buy.remove(buyOrder);
+                sell.remove();
+                buy.remove();
             } else if (sellOrder.count > buyOrder.count) {
                 sellOrder.count -= buyOrder.count;
-                buy.remove(buyOrder);
+                buy.remove();
             } else {
                 buyOrder.count -= sellOrder.count;
-                sell.remove(sellOrder);
+                sell.remove();
             }
         }
     }
