@@ -13,19 +13,24 @@ class Gcpc {
 
     public Gcpc(int n) {
         idToTeam = new HashMap<>(n);
-        for (int i = 1; i <= n; i++) {
-            Team t = new Team(i, 0, 0);
-            ost.add(t);
-            idToTeam.put(i, t);
-        }
-        favTeam = idToTeam.get(1);
+        Team t = new Team(1, 0, 0);
+        ost.add(t);
+        idToTeam.put(1, t);
+        favTeam = t;
     }
 
     public int updateScore(int teamId, int penalty) {
-        Team t = idToTeam.get(teamId);
-        ost.remove(t);
-        t.update(penalty);
-        ost.add(t);
+        if (idToTeam.containsKey(teamId)) {
+            Team t = idToTeam.get(teamId);
+            ost.remove(t);
+            t.update(penalty);
+            ost.add(t);
+        } else {
+            Team t = new Team(teamId, 1, penalty);
+            ost.add(t);
+            idToTeam.put(teamId, t);
+        }
+
         return ost.rank(favTeam) + 1;
     }
 
