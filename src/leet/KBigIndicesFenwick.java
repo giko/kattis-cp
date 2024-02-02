@@ -25,7 +25,6 @@ class SolutionFenwick {
             }
             left.update(num, 1);
         }
-
         return ans;
     }
 }
