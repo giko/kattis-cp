@@ -1,7 +1,6 @@
 package lektira;
 
 import java.io.*;
-import java.util.TreeSet;
 
 public class Lektira {
     public static void main(String[] a) throws IOException {
@@ -9,17 +8,19 @@ public class Lektira {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         String word = in.readLine();
 
-        TreeSet<String> set = new TreeSet<>();
+        String minimal = word;
         for (int i = 1; i < word.length(); i++) {
             for (int j = i + 1; j < word.length(); j++) {
-                set.add(
+                String nString =
                         reverse(word.substring(0, i))
                                 + reverse(word.substring(i, j))
-                                + reverse(word.substring(j))
-                );
+                                + reverse(word.substring(j));
+                if (nString.compareTo(minimal) < 0) {
+                    minimal = nString;
+                }
             }
         }
-        out.println(set.first());
+        out.println(minimal);
         out.close();
     }
 
