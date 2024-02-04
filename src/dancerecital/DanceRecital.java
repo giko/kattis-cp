@@ -20,14 +20,7 @@ public class DanceRecital {
         int[][] doubles = new int[R][R];
         for (int i = 0; i < R; i++) {
             for (int j = i + 1; j < R; j++) {
-                int sum = 0;
-                int doublesi = rehersals[i] & rehersals[j];
-                for (int k = 0; k <= maxChar; k++) {
-                    if ((doublesi & (1 << k)) != 0) {
-                        ++sum;
-                    }
-                }
-                doubles[i][j] = sum;
+                doubles[i][j] = Integer.bitCount(rehersals[i] & rehersals[j]);
             }
         }
 
@@ -38,14 +31,19 @@ public class DanceRecital {
 
         int permutations = factorial(R);
         int result = Integer.MAX_VALUE;
+        outer:
         for (int i = 0; i < permutations; i++) {
             int sum = 0;
             for (int j = 1; j < R; j++) {
                 int minIndex = Math.min(indices[j - 1], indices[j]);
                 int maxIndex = Math.max(indices[j - 1], indices[j]);
                 sum += doubles[minIndex][maxIndex];
+                if (sum >= result) {
+                    nextPermutation(indices);
+                    continue outer;
+                }
             }
-            result = Math.min(result, sum);
+            result = sum;
             nextPermutation(indices);
         }
         out.println(result);
@@ -62,13 +60,9 @@ public class DanceRecital {
 
     public static void nextPermutation(int[] nums) {
         int index = nums.length - 2;
-        // find the first pair of two successive numbers nums[index] and nums[index + 1]
-        // from the right, which satisfy nums[index] < [index + 1]
         while (index >= 0 && nums[index] >= nums[index + 1]) {
             index--;
         }
-
-        // swap the number nums[index] with the number a[larger] which is just larger than itself
         if (index >= 0) {
             int larger = nums.length - 1;
             while (larger >= 0 && nums[larger] <= nums[index]) {
@@ -76,8 +70,6 @@ public class DanceRecital {
             }
             swap(nums, index, larger);
         }
-
-        // reverse the numbers following a[index] to get the next smallest lexicographic permutation
         reverse(nums, index + 1);
     }
 
