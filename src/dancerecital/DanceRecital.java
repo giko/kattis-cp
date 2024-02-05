@@ -5,6 +5,7 @@ import java.io.*;
 /**
  * Solution to dancerecital kattis task
  * factorial, nextPermutation, reverse, swap are utility functions/methods
+ * Explanations for solution in <a href="https://www.chud.cc/articles/kattis-dancerecital-solution">this article</a>
  */
 public class DanceRecital {
     public static void main(String[] a) throws IOException {
