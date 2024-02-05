@@ -2,25 +2,29 @@ package dancerecital;
 
 import java.io.*;
 
+/**
+ * Solution to dancerecital kattis task
+ * factorial, nextPermutation, reverse, swap are utility functions/methods
+ */
 public class DanceRecital {
     public static void main(String[] a) throws IOException {
         PrintWriter out = new PrintWriter(new BufferedOutputStream(System.out));
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
         int R = Integer.parseInt(in.readLine());
-        int[] rehersals = new int[R];
+        int[] recitals = new int[R];
         int maxChar = 0;
         for (int i = 0; i < R; i++) {
             for (char c : in.readLine().toCharArray()) {
-                rehersals[i] |= 1 << (c - 'A');
+                recitals[i] |= 1 << (c - 'A');
                 maxChar = Math.max(maxChar, c - 'A');
             }
         }
 
-        int[][] doubles = new int[R][R];
+        int[][] distances = new int[R][R];
         for (int i = 0; i < R; i++) {
             for (int j = i + 1; j < R; j++) {
-                doubles[i][j] = Integer.bitCount(rehersals[i] & rehersals[j]);
+                distances[i][j] = Integer.bitCount(recitals[i] & recitals[j]);
             }
         }
 
@@ -31,19 +35,16 @@ public class DanceRecital {
 
         int permutations = factorial(R);
         int result = Integer.MAX_VALUE;
-        outer:
         for (int i = 0; i < permutations; i++) {
             int sum = 0;
             for (int j = 1; j < R; j++) {
                 int minIndex = Math.min(indices[j - 1], indices[j]);
                 int maxIndex = Math.max(indices[j - 1], indices[j]);
-                sum += doubles[minIndex][maxIndex];
-                if (sum >= result) {
-                    nextPermutation(indices);
-                    continue outer;
-                }
+                sum += distances[minIndex][maxIndex];
             }
-            result = sum;
+            if (sum < result) {
+                result = sum;
+            }
             nextPermutation(indices);
         }
         out.println(result);
@@ -52,7 +53,7 @@ public class DanceRecital {
 
     public static int factorial(int n) {
         int result = 1;
-        for (int i = 1; i <= n; i++) {
+        for (int i = 2; i <= n; i++) {
             result *= i;
         }
         return result;
