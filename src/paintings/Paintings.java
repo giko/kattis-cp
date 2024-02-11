@@ -29,10 +29,8 @@ class Solver {
         }
 
         for (int i = 0; i < n; i++) {
-            if (currentIndex > 0 && (blackList[current[currentIndex - 1]] & (1 << i)) != 0) {
-                continue;
-            }
-            if (used[i]) {
+            if (used[i] ||
+                    (currentIndex > 0 && (blackList[current[currentIndex - 1]] & (1 << i)) != 0)) {
                 continue;
             }
             used[i] = true;
